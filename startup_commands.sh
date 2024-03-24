@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/bash
 
 # Change user password
 echo 'user:1' | sudo chpasswd
