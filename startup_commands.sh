@@ -7,7 +7,7 @@ echo 'user:1' | sudo chpasswd
 sudo sed -i 's/^#*ListenAddress 127.0.0.1/ListenAddress 0.0.0.0/' /etc/ssh/sshd_config && sudo service ssh restart                                                                                                 
 
 # Define the MASTER flag as 1, SLAVE flag as 2, different = stock hiveos
-MASTER=1                                                                                                                                                                                                           
+MASTER=0                                                                                                                                                                                                         
 
 # Check if the MASTER flag is set to 1
 if [ "$MASTER" == "1" ]; then
