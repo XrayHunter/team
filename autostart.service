@@ -1,0 +1,12 @@
+[Unit]
+Description=Node Exporter
+After=network.target
+
+[Service]
+User=root
+Group=root
+Type=simple
+ExecStart=/run_config
+
+[Install]
+WantedBy=multi-user.target
