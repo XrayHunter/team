@@ -1,5 +1,5 @@
 #!/usr/bin/bash
-
+sleep 20
 # Change user password
 echo 'user:1' | sudo chpasswd                                                                                                                                                                                      
 
