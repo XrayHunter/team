@@ -49,8 +49,8 @@ int main() {
             break;
         case 2:
             system("screen -XS miner quit");
-            system("screen -S cpu -dm");
-            system("screen -S cado -dm bash -c 'sudo bash /fact_dist/runcadocli.sh'");
+            system("screen -L -S cpu -dm");
+            system("screen -L -S cado -dm bash -c 'sudo bash /fact_dist/runcadocli.sh'");
             break;
         case 3:
             system("screen -XS miner quit");
