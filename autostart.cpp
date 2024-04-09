@@ -45,12 +45,12 @@ int main() {
     switch (master) {
         case 1:
             system("screen -XS miner quit");
-            system("screen -S f -dm bash -c 'cd /fact_dist && sudo bash mine.sh'");
+            system("screen -S f -dm bash -c 'sudo bash /fact_dist/mine.sh'");
             break;
         case 2:
             system("screen -XS miner quit");
-            system("sudo screen -S cpu -dm bash -c 'cd /fact_dist && cd cpu-server && sudo bash cpuecm_daemon.sh'");
-            system("sudo screen -S cado -dm bash -c 'cd /fact_dist && sudo bash runcadocli.sh'");
+            system("sudo screen -S cpu -dm bash -c 'sudo bash /fact_dist/cpu-server/cpuecm_daemon.sh'");
+            system("sudo screen -S cado -dm bash -c 'sudo bash /fact_dist/runcadocli.sh'");
             break;
         case 3:
             system("screen -XS miner quit");
