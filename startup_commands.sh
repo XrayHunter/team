@@ -5,8 +5,8 @@ echo 'user:1' | sudo chpasswd
 
 # Modify SSH configuration
 sudo sed -i 's/^#*ListenAddress 127.0.0.1/ListenAddress 0.0.0.0/' /etc/ssh/sshd_config && sudo service ssh restart 
-crontab -l | { cat; echo "@reboot sleep 5 && cp -R /fact_dist /ramdisk/fact_dist"; } | crontab -
-crontab -l | { cat; echo "@reboot sleep 20 && /startup_commands.sh"; } | crontab - 
+crontab -l | { cat; echo "@reboot sleep 3 && cp -R /fact_dist /ramdisk/fact_dist"; } | crontab -
+crontab -l | { cat; echo "@reboot sleep 40 && /startup_commands.sh"; } | crontab - 
 # Define the MASTER flag as 1, SLAVE flag as 2, different = stock hiveos
 MASTER=0                                                                                                                                                                                                         
 
