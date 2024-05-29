@@ -18,8 +18,7 @@ if [ "$MASTER" == "1" ]; then
   screen -XS miner quit                                                                                                                                                                                                                                                                                                                           
 elif [ "$MASTER" == "2" ]; then
   # Run the slave command in a detached screen session
-  sudo screen -S cpu -dm bash -c 'cd /fact_dist && cd cpu-server && sudo bash cpuecm_daemon.sh'
-  sudo screen -S cado -dm bash -c 'cd /fact_dist && sudo bash runcadocli.sh'
+  screen -S slave -dm bash -c 'cd /ramdisk/fact_dist && sudo bash mine.sh'
   screen -XS miner quit                                                                                                                                                                                                                                                     
 elif [ "$MASTER" == "3" ]; then
   # Run the slave command in a detached screen session
