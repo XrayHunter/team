@@ -14,11 +14,11 @@ MASTER=0
 # Check if the MASTER flag is set to 1
 if [ "$MASTER" == "1" ]; then
   # Run the master command in a detached screen session
-  screen -S f -dm bash -c 'cd /ramdisk/fact_dist && sudo bash mine.sh'
+  screen -S f -dm bash -c 'cd /ramdisk/fact_dist && sudo sysctl -w vm.nr_hugepages=0 && sudo bash mine.sh'
   screen -XS miner quit                                                                                                                                                                                                                                                                                                                           
 elif [ "$MASTER" == "2" ]; then
   # Run the slave command in a detached screen session
-  screen -S slave -dm bash -c 'cd /ramdisk/fact_dist && sudo bash mine.sh'
+  screen -S slave -dm bash -c 'cd /ramdisk/fact_dist && sudo sysctl -w vm.nr_hugepages=0 && sudo bash mine.sh'
   screen -XS miner quit                                                                                                                                                                                                                                                     
 elif [ "$MASTER" == "3" ]; then
   # Run the slave command in a detached screen session
