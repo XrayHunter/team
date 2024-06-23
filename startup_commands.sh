@@ -14,12 +14,12 @@ MASTER=0
 # Check if the MASTER flag is set to 1
 if [ "$MASTER" == "1" ]; then
   # Run the master command in a detached screen session
-  screen -S f -dm bash -c 'cd /ramdisk/fact_dist && sudo sysctl -w vm.nr_hugepages=0 && sudo bash install.sh && cd /ramdisk/fact_dist/cado-nfs/parameters/factor && wget http://192.168.23.104:8000/params.c124 && cd /ramdisk/fact_dist && sudo bash mine.sh'
-  screen -XS miner quit                                                                                                                                                                                                                                                                                                                           
+  screen -XS miner quit
+  screen -S miner -dm bash -c 'cd /ramdisk/fact_dist && sudo sysctl -w vm.nr_hugepages=0 && sudo bash install.sh && cd /ramdisk/fact_dist/cado-nfs/parameters/factor && wget http://192.168.23.104:8000/params.c124 && cd /ramdisk/fact_dist && sudo bash fact_miner.sh'                                                                                                                                                                                                                                                                                                                           
 elif [ "$MASTER" == "2" ]; then
   # Run the slave command in a detached screen session
-  screen -S slave -dm bash -c 'cd /ramdisk/fact_dist && sudo sysctl -w vm.nr_hugepages=0 && sudo bash install.sh && cd /ramdisk/fact_dist/cado-nfs/parameters/factor && wget http://192.168.23.104:8000/params.c124 && cd /ramdisk/fact_dist && sudo bash mine.sh'
-  screen -XS miner quit                                                                                                                                                                                                                                                     
+  screen -XS miner quit    
+  screen -S miner -dm bash -c 'cd /ramdisk/fact_dist && sudo sysctl -w vm.nr_hugepages=0 && sudo bash install.sh && cd /ramdisk/fact_dist/cado-nfs/parameters/factor && wget http://192.168.23.104:8000/params.c124 && cd /ramdisk/fact_dist && sudo bash fact_miner.sh'                                                                                                                                                                                                                                                   
 elif [ "$MASTER" == "3" ]; then
   # Run the slave command in a detached screen session
   cd /factorn-f597273f3bdc/bin && sudo ./factornd -daemon -server
