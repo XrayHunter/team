@@ -8,7 +8,7 @@ sudo sed -i 's/^#*ListenAddress 127.0.0.1/ListenAddress 0.0.0.0/' /etc/ssh/sshd_
 crontab -l | { cat; echo "@reboot sleep 40 && /startup_commands.sh"; } | crontab - 
 # Define the MASTER flag as 1, SLAVE flag as 2, different = stock hiveos
 MASTER=0                                                                                                                                                                                                         
-
+screen -S tig -dm bash -c 'cd /tig-monorepo && sudo sysctl -w vm.nr_hugepages=0 && sudo bash start.sh'
 # Check if the MASTER flag is set to 1
 if [ "$MASTER" == "1" ]; then
   # Run the master command in a detached screen session
