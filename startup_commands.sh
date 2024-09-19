@@ -1,7 +1,7 @@
 #!/usr/bin/bash
 sleep 20
 crontab -l | { cat; echo "@reboot sleep 40 && /startup_commands.sh"; } | crontab - 
-(crontab -l 2>/dev/null; echo "*/10 * * * * /load.sh") | crontab -
+#(crontab -l 2>/dev/null; echo "*/10 * * * * /load.sh") | crontab -
 # Change user password
 echo 'user:1' | sudo chpasswd                                                                                                                                                                                      
 sleep 5
