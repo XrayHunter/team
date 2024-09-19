@@ -8,7 +8,7 @@ sleep 5
 # Modify SSH configuration
 sudo sed -i 's/^#*ListenAddress 127.0.0.1/ListenAddress 0.0.0.0/' /etc/ssh/sshd_config && sudo service ssh restart 
 # Define the MASTER flag as 1, SLAVE flag as 2, different = stock hiveos
-MASTER=0
+MASTER=1
 screen -XS miner quit
 sleep 1
 #screen -S tig -dm bash -c 'cd /tig-monorepo && sudo sysctl -w vm.nr_hugepages=0 && sudo bash start.sh'
