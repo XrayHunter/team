@@ -14,8 +14,12 @@ CHALLENGE_ID="c004"
 difficulty="[220,520]"
 start_nonce=0
 num_nonces=100000
-num_workers=1
-enable_debug=false
+num_workers=16
+enable_debug=true
+
+# Player and block IDs
+player_id="0x86d057c91af3772dd2ebee01ab09fe639bf9a0d5"
+block_id="572873635574a8611d10b9b75dcbeb4f"
 
 get_closest_power_of_2() {
     local n=$1
@@ -27,7 +31,8 @@ get_closest_power_of_2() {
 }
 
 for ALGORITHM in "${algorithms[@]}"; do
-    SETTINGS="{\"challenge_id\":\"$CHALLENGE_ID\",\"difficulty\":$difficulty,\"algorithm_id\":\"\",\"player_id\":\"\",\"block_id\":\"\"}"
+    # Update SETTINGS with algorithm_id, player_id, and block_id
+    SETTINGS="{\"challenge_id\":\"$CHALLENGE_ID\",\"difficulty\":$difficulty,\"algorithm_id\":\"$ALGORITHM\",\"player_id\":\"$player_id\",\"block_id\":\"$block_id\"}"
     num_solutions=0
     num_invalid=0
     total_ms=0
@@ -51,7 +56,7 @@ for ALGORITHM in "${algorithms[@]}"; do
         start_time=$(date +%s%3N)
         stdout=$(mktemp)
         stderr=$(mktemp)
-        ./target/release/tig-worker compute_batch "$SETTINGS" "random_string" $current_nonce $nonces_to_compute $power_of_2_nonces $REPO_DIR/tig-algorithms/wasm/$CHALLENGE/$ALGORITHM.wasm --workers $nonces_to_compute >"$stdout" 2>"$stderr"
+        ./home/bn/bench/tig-monorepo/target/release/tig-worker compute_batch "$SETTINGS" "random_string" $current_nonce $nonces_to_compute $power_of_2_nonces $REPO_DIR/tig-algorithms/wasm/$CHALLENGE/$ALGORITHM.wasm --workers $nonces_to_compute >"$stdout" 2>"$stderr"
         exit_code=$?
         output_stdout=$(cat "$stdout")
         output_stderr=$(cat "$stderr")
