@@ -22,7 +22,7 @@ CHALLENGE_ID="c004"
 difficulty="[220,520]"
 start_nonce=0
 num_nonces=100000
-num_workers=16
+num_workers=32
 enable_debug=true
 
 # Player and block IDs
@@ -46,7 +46,9 @@ for ALGORITHM in "${algorithms[@]}"; do
     fi
 
     # Update SETTINGS with algorithm_id, player_id, and block_id
+    #SETTINGS="{\"challenge_id\":\"${CHALLENGE_ID}\",\"difficulty\":[${difficulty}],\"algorithm_id\":\"${ALGORITHM}\",\"player_id\":\"${player_id}\",\"block_id\":\"${block_id}\"}"
     SETTINGS="{\"challenge_id\":\"$CHALLENGE_ID\",\"difficulty\":$difficulty,\"algorithm_id\":\"$ALGORITHM\",\"player_id\":\"$player_id\",\"block_id\":\"$block_id\"}"
+    echo "SETTINGS = $SETTINGS"
     num_solutions=0
     num_invalid=0
     total_ms=0
@@ -72,7 +74,7 @@ for ALGORITHM in "${algorithms[@]}"; do
         stderr=$(mktemp)
 
         # Prepare the command for output
-        command="./home/bn/bench/tig-monorepo/target/release/tig-worker compute_batch \"$SETTINGS\" \"random_string\" $current_nonce $nonces_to_compute $power_of_2_nonces $REPO_DIR/tig-algorithms/wasm/$CHALLENGE/$wasm_file --workers $nonces_to_compute"
+        command="./tig-monorepo/target/release/tig-worker compute_batch \"$SETTINGS\" \"random_string\" $current_nonce $nonces_to_compute $power_of_2_nonces $REPO_DIR/tig-algorithms/wasm/$CHALLENGE/$wasm_file --workers $nonces_to_compute"
 
         # Output the command being executed
         #echo "Executing: $command"
