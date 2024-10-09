@@ -8,6 +8,14 @@ if [ ! -f $TIG_WORKER_PATH ]; then
     exit 1
 fi
 
+# Define algorithms and their corresponding .wasm files
+declare -A wasm_files
+wasm_files=( 
+    ["c004_a026"]="optimax_gpu.wasm"
+    ["c004_a029"]="gpu_manual_fastest.wasm"
+    ["c004_a034"]="invector.wasm"
+)
+
 algorithms=("c004_a026" "c004_a029" "c004_a034")
 CHALLENGE="vector_search"
 CHALLENGE_ID="c004"
@@ -31,6 +39,12 @@ get_closest_power_of_2() {
 }
 
 for ALGORITHM in "${algorithms[@]}"; do
+    wasm_file="${wasm_files[$ALGORITHM]}"  # Get the correct .wasm file for the algorithm
+    if [ -z "$wasm_file" ]; then
+        echo "Error: No wasm file found for algorithm $ALGORITHM"
+        exit 1
+    fi
+
     # Update SETTINGS with algorithm_id, player_id, and block_id
     SETTINGS="{\"challenge_id\":\"$CHALLENGE_ID\",\"difficulty\":$difficulty,\"algorithm_id\":\"$ALGORITHM\",\"player_id\":\"$player_id\",\"block_id\":\"$block_id\"}"
     num_solutions=0
@@ -58,10 +72,10 @@ for ALGORITHM in "${algorithms[@]}"; do
         stderr=$(mktemp)
 
         # Prepare the command for output
-        command="./home/bn/bench/tig-monorepo/target/release/tig-worker compute_batch \"$SETTINGS\" \"random_string\" $current_nonce $nonces_to_compute $power_of_2_nonces $REPO_DIR/tig-algorithms/wasm/$CHALLENGE/$ALGORITHM.wasm --workers $nonces_to_compute"
+        command="./home/bn/bench/tig-monorepo/target/release/tig-worker compute_batch \"$SETTINGS\" \"random_string\" $current_nonce $nonces_to_compute $power_of_2_nonces $REPO_DIR/tig-algorithms/wasm/$CHALLENGE/$wasm_file --workers $nonces_to_compute"
 
         # Output the command being executed
-        echo "Executing: $command"
+        #echo "Executing: $command"
 
         # Execute the command
         eval "$command >\"$stdout\" 2>\"$stderr\""
