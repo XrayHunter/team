@@ -56,7 +56,16 @@ for ALGORITHM in "${algorithms[@]}"; do
         start_time=$(date +%s%3N)
         stdout=$(mktemp)
         stderr=$(mktemp)
-        ./home/bn/bench/tig-monorepo/target/release/tig-worker compute_batch "$SETTINGS" "random_string" $current_nonce $nonces_to_compute $power_of_2_nonces $REPO_DIR/tig-algorithms/wasm/$CHALLENGE/$ALGORITHM.wasm --workers $nonces_to_compute >"$stdout" 2>"$stderr"
+
+        # Prepare the command for output
+        command="./home/bn/bench/tig-monorepo/target/release/tig-worker compute_batch \"$SETTINGS\" \"random_string\" $current_nonce $nonces_to_compute $power_of_2_nonces $REPO_DIR/tig-algorithms/wasm/$CHALLENGE/$ALGORITHM.wasm --workers $nonces_to_compute"
+
+        # Output the command being executed
+        echo "Executing: $command"
+
+        # Execute the command
+        eval "$command >\"$stdout\" 2>\"$stderr\""
+        
         exit_code=$?
         output_stdout=$(cat "$stdout")
         output_stderr=$(cat "$stderr")
